@@ -23,15 +23,12 @@ import org.pockettech.qiusheng.entity.charttransfer.MetaMsg;
 import org.pockettech.qiusheng.entity.filter.ChartFilter;
 import org.pockettech.qiusheng.entity.tools.ChartFileHandler;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.MultipartConfigFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.MultipartConfigElement;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -161,9 +158,23 @@ public class StoreChartsServiceImpl implements ChartTransferService {
         log.info("已收到" + name);
 
         try {
-            File path = new File(ResourceUtils.getURL("classpath:").getPath());
-            String filePath = path.getParentFile().getParentFile().getParent() + File.separator + "MalodyV" + File.separator;
+            String os = System.getProperty("os.name");
+            String filePath = "";
+
+            if (os.toLowerCase().startsWith("win")) {
+                File path = new File(ResourceUtils.getURL("classpath:").getPath());
+                filePath = path.getParentFile().getParentFile().getParent() + File.separator + "MalodyV" + File.separator;
+                // 项目作为jar包运行时路径会带上“file:\\”，在此找到并删除
+                int sub = filePath.indexOf("file:" + File.separator);
+                if (sub != -1){
+                    filePath = filePath.substring(sub + ("file:" + File.separator).length());
+                }
+            } else {
+                filePath = "MalodyV" + File.separator;
+            }
+
             filePath = filePath + "_song_" + sid + File.separator;
+            log.info("----------上传路径为" + filePath + "----------");
             File tmp = new File(filePath);
             if(!tmp.exists()){
                 tmp.mkdirs();
@@ -180,12 +191,7 @@ public class StoreChartsServiceImpl implements ChartTransferService {
                     file1.delete();
                 }
             }
-            // 项目作为jar包运行时路径会带上“file:\\”，在此找到并删除
-            int sub = filePath.indexOf("file:\\");
-            if (sub != -1){
-                filePath = filePath.substring(sub + "file:\\".length());
-            }
-//            file.transferTo(new File(filePath));//filePath
+
             //项目作为jar包运行时MultipartFile直接存储时tomcat会先存入临时文件，在此更换文件存入方式
             File targetFile = new File(filePath);
             FileUtils.writeByteArrayToFile(targetFile,file.getBytes());
@@ -197,6 +203,7 @@ public class StoreChartsServiceImpl implements ChartTransferService {
             if (ChartFileHandler.getFileExtension(name).equals(".mc")) {
                 ChartFileHandler chartFileHandler = new ChartFileHandler("http://" + localhost + ":" + port + "/resource");
                 chartFileHandler.setZipChartFile(filePath);
+                log.info("----------文件路径为：" + filePath + "----------");
                 log.info("初始化解压参数成功");
                 chartFileHandler.unzipFile();
                 log.info("文件" + name + "解压成功");

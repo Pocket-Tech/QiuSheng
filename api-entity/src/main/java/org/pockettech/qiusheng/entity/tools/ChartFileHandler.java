@@ -29,6 +29,7 @@ public class ChartFileHandler {
 
     private String zipChartFilePath;
     private String unzipChartFilePath;
+    private String chartFileName;
     private String rootResourcePath = "http://localhost/resource";
 
     private long file_size;
@@ -51,12 +52,11 @@ public class ChartFileHandler {
 
     //初始化解压参数
     public void setZipChartFile(String zipChartFilePath) throws UnsupportedEncodingException {
-//        zipChartFilePath = new String(zipChartFilePath.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
-
         this.zipChartFilePath = zipChartFilePath;
         this.unzipChartFilePath = zipChartFilePath;
 
         File oldName = new File(this.zipChartFilePath);
+        this.chartFileName = oldName.getName();
         File newName = new File(this.zipChartFilePath + "x");
 
         if(oldName.renameTo(newName))
@@ -149,7 +149,6 @@ public class ChartFileHandler {
                 jsonSong.get("bpm").getAsInt(),
                 jsonSong.get("title").getAsString(),
                 jsonSong.get("artist").getAsString(),
-//                meta.get("mode").getAsInt(),
                 meta.get("mode").getAsInt(),
                 nowDay,
                 null,
@@ -161,25 +160,21 @@ public class ChartFileHandler {
 
     //返回从元数据构造的谱面对象
     public Chart returnChart() {
-        String filename = "";
-        filename = unzipChartFilePath.substring(unzipChartFilePath.lastIndexOf("\\") + 1);
         User user = new User(0, meta.get("creator").getAsString());
         Chart chart = new Chart(
                 meta.get("id").getAsInt(), //cid
                 jsonSong.get("id").getAsInt(),//sid
                 0,//uid
-//                meta.get("creator").getAsString(),//creator
                 meta.get("version").getAsString(),//version
                 6,//c_level
                 0,//type
                 file_size,//size
                 meta.get("mode").getAsInt(),//mode
                 null,
-                rootResourcePath + "/_song_" + jsonSong.get("id").getAsInt() + "/" + filename, //file_path
+                rootResourcePath + "/_song_" + jsonSong.get("id").getAsInt() + "/" + chartFileName, //file_path
                 null,
                 user
         );
-//        chart.setMsgFromSong(returnSong());
 
         return chart;
     }
