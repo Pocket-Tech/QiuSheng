@@ -1,6 +1,6 @@
 package org.pockettech.qiusheng.api;
 
-import org.pockettech.qiusheng.entity.Result.DownloadResult;
+import org.pockettech.qiusheng.entity.result.DownloadResult;
 import org.pockettech.qiusheng.entity.charttransfer.ChartSign;
 
 public interface ChartTransferService {

@@ -19,7 +19,7 @@
         where c.sid = #{sid} and c.uid = u.uid and s.sid = c.sid
     </select>
 
-    <resultMap id="findChartsBySidMap" type="org.pockettech.qiusheng.entity.Data.Chart">
+    <resultMap id="findChartsBySidMap" type="org.pockettech.qiusheng.entity.data.Chart">
         <id column="cid" property="cid" jdbcType="INTEGER"/>
         <result column="uid" property="uid" jdbcType="INTEGER"/>
         <result column="version" property="version" jdbcType="VARCHAR"/>
@@ -27,17 +27,17 @@
         <result column="type" property="type" jdbcType="INTEGER"/>
         <result column="size" property="size" jdbcType="INTEGER"/>
         <result column="c_mode" property="c_mode" jdbcType="INTEGER"/>
-        <collection property="user" ofType="org.pockettech.qiusheng.entity.Data.User">
+        <collection property="user" ofType="org.pockettech.qiusheng.entity.data.User">
             <id column="uid" property="uid" jdbcType="INTEGER"/>
             <result column="user_name" property="user_name" jdbcType="VARCHAR"/>
         </collection>
-        <collection property="song" ofType="org.pockettech.qiusheng.entity.Data.Song">
+        <collection property="song" ofType="org.pockettech.qiusheng.entity.data.Song">
             <id column="sid" property="sid" jdbcType="INTEGER"/>
             <result column="length" property="length" jdbcType="INTEGER"/>
         </collection>
     </resultMap>
 
-    <select id="findChartByCid" resultType="org.pockettech.qiusheng.entity.Data.Chart">
+    <select id="findChartByCid" resultType="org.pockettech.qiusheng.entity.data.Chart">
         select * from chart where cid = #{cid}
     </select>
 
@@ -45,7 +45,7 @@
         select sid from chart where cid = #{cid}
     </select>
 
-    <insert id="uploadChartMsg" parameterType="org.pockettech.qiusheng.entity.Data.Chart">
+    <insert id="uploadChartMsg" parameterType="org.pockettech.qiusheng.entity.data.Chart">
         <selectKey keyProperty="cid" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -55,7 +55,7 @@
         (#{cid}, #{sid}, #{uid}, #{version}, #{level}, #{type}, #{size}, #{c_mode}, #{c_md5}, #{c_file_path})
     </insert>
 
-    <update id="updateChart" parameterType="org.pockettech.qiusheng.entity.Data.Chart">
+    <update id="updateChart" parameterType="org.pockettech.qiusheng.entity.data.Chart">
         update chart set
         version = #{version},level = #{level},
         type = #{type},size = #{size},c_mode = #{c_mode},c_md5 = ifnull(#{c_md5},c_md5),c_file_path = #{c_file_path}

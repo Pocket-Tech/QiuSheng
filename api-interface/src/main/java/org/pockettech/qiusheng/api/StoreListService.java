@@ -1,8 +1,8 @@
 package org.pockettech.qiusheng.api;
 
-import org.pockettech.qiusheng.entity.Data.Song;
-import org.pockettech.qiusheng.entity.Result.ListResult;
-import org.pockettech.qiusheng.entity.Result.SongResult;
+import org.pockettech.qiusheng.entity.data.Song;
+import org.pockettech.qiusheng.entity.result.ListResult;
+import org.pockettech.qiusheng.entity.result.SongResult;
 
 import java.util.List;
 

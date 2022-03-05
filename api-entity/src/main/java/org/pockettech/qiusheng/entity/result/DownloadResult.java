@@ -1,4 +1,4 @@
-package org.pockettech.qiusheng.entity.Result;
+package org.pockettech.qiusheng.entity.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

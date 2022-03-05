@@ -2,9 +2,9 @@ package org.pockettech.qiusheng.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.pockettech.qiusheng.api.StoreActivityService;
-import org.pockettech.qiusheng.entity.Result.ActivityResult;
-import org.pockettech.qiusheng.entity.Result.ChartResult;
-import org.pockettech.qiusheng.entity.Result.ListResult;
+import org.pockettech.qiusheng.entity.result.ActivityResult;
+import org.pockettech.qiusheng.entity.result.ChartResult;
+import org.pockettech.qiusheng.entity.result.ListResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;

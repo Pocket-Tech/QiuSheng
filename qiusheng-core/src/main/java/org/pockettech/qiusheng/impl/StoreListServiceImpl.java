@@ -1,11 +1,11 @@
 package org.pockettech.qiusheng.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.pockettech.qiusheng.entity.Data.Song;
+import org.pockettech.qiusheng.entity.data.Song;
 import org.pockettech.qiusheng.api.StoreListService;
 import org.pockettech.qiusheng.dao.SongDao;
-import org.pockettech.qiusheng.entity.Result.ListResult;
-import org.pockettech.qiusheng.entity.Result.SongResult;
+import org.pockettech.qiusheng.entity.result.ListResult;
+import org.pockettech.qiusheng.entity.result.SongResult;
 import org.pockettech.qiusheng.entity.builder.StoreConditionalFilterBuilder;
 import org.pockettech.qiusheng.entity.filter.StoreConditionalFilter;
 import org.pockettech.qiusheng.entity.tools.SongFilterHandle;

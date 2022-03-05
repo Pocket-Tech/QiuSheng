@@ -1,4 +1,4 @@
-package org.pockettech.qiusheng.Config;
+package org.pockettech.qiusheng.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ResourceUtils;
@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
 
 @Configuration
 @EnableWebMvc

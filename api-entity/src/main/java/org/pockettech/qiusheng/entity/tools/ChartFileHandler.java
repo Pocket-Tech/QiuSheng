@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.generic.GenericAudioHeader;
 import org.jaudiotagger.audio.ogg.util.OggInfoReader;
-import org.pockettech.qiusheng.entity.Data.Chart;
-import org.pockettech.qiusheng.entity.Data.Song;
-import org.pockettech.qiusheng.entity.Data.User;
+import org.pockettech.qiusheng.entity.data.Chart;
+import org.pockettech.qiusheng.entity.data.Song;
+import org.pockettech.qiusheng.entity.data.User;
 
 import java.io.*;
 import java.math.BigInteger;

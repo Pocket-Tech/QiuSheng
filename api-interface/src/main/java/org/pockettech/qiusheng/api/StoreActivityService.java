@@ -1,8 +1,8 @@
 package org.pockettech.qiusheng.api;
 
-import org.pockettech.qiusheng.entity.Result.ActivityResult;
-import org.pockettech.qiusheng.entity.Result.ChartResult;
-import org.pockettech.qiusheng.entity.Result.ListResult;
+import org.pockettech.qiusheng.entity.result.ActivityResult;
+import org.pockettech.qiusheng.entity.result.ChartResult;
+import org.pockettech.qiusheng.entity.result.ListResult;
 
 public interface StoreActivityService {
     ListResult<ActivityResult> storeEvents(Integer active, Integer from);

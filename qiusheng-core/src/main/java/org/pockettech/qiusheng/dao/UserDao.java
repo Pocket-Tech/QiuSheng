@@ -1,7 +1,7 @@
 package org.pockettech.qiusheng.dao;
 
 import org.apache.ibatis.annotations.Param;
-import org.pockettech.qiusheng.entity.Data.User;
+import org.pockettech.qiusheng.entity.data.User;
 
 public interface UserDao {
     User findUserByName(@Param("user_name") String user_name);

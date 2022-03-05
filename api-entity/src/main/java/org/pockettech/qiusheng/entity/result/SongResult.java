@@ -1,9 +1,9 @@
-package org.pockettech.qiusheng.entity.Result;
+package org.pockettech.qiusheng.entity.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.pockettech.qiusheng.entity.Data.Song;
+import org.pockettech.qiusheng.entity.data.Song;
 
 @Data
 @NoArgsConstructor

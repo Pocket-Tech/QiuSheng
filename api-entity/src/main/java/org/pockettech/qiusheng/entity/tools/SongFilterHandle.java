@@ -1,7 +1,7 @@
 package org.pockettech.qiusheng.entity.tools;
 
 import lombok.AllArgsConstructor;
-import org.pockettech.qiusheng.entity.Data.Song;
+import org.pockettech.qiusheng.entity.data.Song;
 import org.pockettech.qiusheng.entity.filter.StoreConditionalFilter;
 
 import java.util.ArrayList;

@@ -8,27 +8,27 @@
         select count(*) from song
     </select>
 
-    <select id="returnSongList" resultType="org.pockettech.qiusheng.entity.Data.Song">
+    <select id="returnSongList" resultType="org.pockettech.qiusheng.entity.data.Song">
         select * from song s
     </select>
 
-    <select id="returnSomeSongList" resultType="org.pockettech.qiusheng.entity.Data.Song">
+    <select id="returnSomeSongList" resultType="org.pockettech.qiusheng.entity.data.Song">
         select * from song limit #{first},#{number}
     </select>
 
-    <select id="findSomeSongByCMode" resultType="org.pockettech.qiusheng.entity.Data.Song">
+    <select id="findSomeSongByCMode" resultType="org.pockettech.qiusheng.entity.data.Song">
         select * from song s,chart c where c.c_mode = #{mode} and c.sid = s.sid limit #{first},#{number}
     </select>
 
-    <select id="findSongByCMode" resultType="org.pockettech.qiusheng.entity.Data.Song">
+    <select id="findSongByCMode" resultType="org.pockettech.qiusheng.entity.data.Song">
         select * from song s,chart c where c.c_mode = #{mode} and c.sid = s.sid
     </select>
 
-    <select id="findSongById" resultType="org.pockettech.qiusheng.entity.Data.Song">
+    <select id="findSongById" resultType="org.pockettech.qiusheng.entity.data.Song">
         select * from song s where s.sid = #{sid}
     </select>
 
-    <insert id="uploadSongMsg" parameterType="org.pockettech.qiusheng.entity.Data.Song">
+    <insert id="uploadSongMsg" parameterType="org.pockettech.qiusheng.entity.data.Song">
         <selectKey keyProperty="sid" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -38,7 +38,7 @@
         (#{sid},  #{length}, #{bpm}, #{title}, #{artist}, #{s_mode}, #{time}, #{s_md5}, #{s_file_path}, #{img_md5}, #{img_file_path})
     </insert>
 
-    <update id="updateSong" parameterType="org.pockettech.qiusheng.entity.Data.Song">
+    <update id="updateSong" parameterType="org.pockettech.qiusheng.entity.data.Song">
         update song set
         length = #{length}, bpm=#{bpm}, title=#{title}, artist = #{artist}, s_mode = #{s_mode},
         time = #{time}, s_md5 = ifnull(#{s_md5},s_md5), s_file_path = #{s_file_path},
@@ -51,11 +51,11 @@
         update song set length = #{length} where sid = #{sid}
     </update>
 
-    <update id="updateSongMD5PathBySid" parameterType="org.pockettech.qiusheng.entity.Data.Song">
+    <update id="updateSongMD5PathBySid" parameterType="org.pockettech.qiusheng.entity.data.Song">
         update song set s_md5 = #{s_md5}, s_file_path = #{s_file_path} where sid = #{sid}
     </update>
 
-    <update id="updateImgMD5PathBySid" parameterType="org.pockettech.qiusheng.entity.Data.Song">
+    <update id="updateImgMD5PathBySid" parameterType="org.pockettech.qiusheng.entity.data.Song">
         update song set img_md5 = #{img_md5}, img_file_path = #{img_file_path} where sid = #{sid}
     </update>
 </mapper>

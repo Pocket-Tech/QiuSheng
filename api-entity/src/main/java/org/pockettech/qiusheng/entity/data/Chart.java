@@ -1,4 +1,4 @@
-package org.pockettech.qiusheng.entity.Data;
+package org.pockettech.qiusheng.entity.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
