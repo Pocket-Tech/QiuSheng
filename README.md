@@ -1,5 +1,7 @@
 # QiuSheng
-开源Malody谱面服务器
+开源Malody V谱面服务器
+
+[English](README_ENG.md) | 简体中文
 
 ### 简介
 ------------------
