@@ -5,15 +5,11 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 //启动类
 @SpringBootApplication
-@EnableAsync
 @Slf4j
 @MapperScan(value = "org.pockettech.qiusheng.dao")
-@EnableTransactionManagement
 public class QiuShengApplication implements CommandLineRunner {
 
     public static void main(String[] args) {

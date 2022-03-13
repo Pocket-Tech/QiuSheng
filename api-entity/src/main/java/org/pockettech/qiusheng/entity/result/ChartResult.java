@@ -24,6 +24,7 @@ public class ChartResult {
     private long size;
     private int mode;
     private String file_path;
+    private int time;
 
     public ChartResult(Chart chart, Song song, String creator){
          this.cid = chart.getCid();
@@ -40,5 +41,6 @@ public class ChartResult {
          this.size = chart.getSize();
          this.mode = chart.getC_mode();
          this.file_path = chart.getC_file_path();
+         this.time = song.getTime();
     }
 }
