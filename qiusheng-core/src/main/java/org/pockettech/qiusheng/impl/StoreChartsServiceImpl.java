@@ -45,8 +45,6 @@ public class StoreChartsServiceImpl implements ChartTransferService {
     @Resource
     UserDao userDao;
 
-
-
     @Value("${server.port}")
     private String port;
 

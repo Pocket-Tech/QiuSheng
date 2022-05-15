@@ -3,6 +3,7 @@ package org.pockettech.qiusheng.impl;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +12,14 @@ import org.springframework.web.bind.annotation.*;
 public class InfoService {
     Information info = new Information();
 
+    @Value("${qiusheng.greeting}")
+    String greeting;
+
     @GetMapping("/api/store/info")
     @ResponseBody
     public Information returnInfo() {
+        if (!greeting.equals(""))
+            info.setWelcome(greeting);
         return info;
     }
 
