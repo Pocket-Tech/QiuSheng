@@ -42,6 +42,9 @@ spring:
     password:  #数据库密码
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+qiusheng:
+  greeting: Welcome to QiuSheng Server #自定义服务器欢迎语
+
 mybatis:
   mapper-locations: classpath:/mapping/*.xml
   #mybatis的映射器文件目录

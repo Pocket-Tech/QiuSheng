@@ -51,8 +51,13 @@ create table if not exists events
     constraint events_song_sid_fk
         foreign key (sid) references song (sid)
 );
-
-
-
-
-
+create table if not exists admin
+(
+    id       int auto_increment,
+    username varchar(30)           not null,
+    password varchar(30)           not null,
+    enable   boolean default true  not null,
+    locked   boolean default false not null,
+    constraint admin_pk
+        primary key (id)
+);

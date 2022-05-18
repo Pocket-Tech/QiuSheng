@@ -42,6 +42,9 @@ spring:
     password:  #password of your database server
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+qiusheng:
+  greeting: Welcome to QiuSheng Server #Customize greeting words
+
 mybatis:
   mapper-locations: classpath:/mapping/*.xml
 ```

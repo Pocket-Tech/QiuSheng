@@ -20,6 +20,7 @@
         <spring-boot.version>2.6.3</spring-boot.version>
         <dubbo.version>3.0.5</dubbo.version>
         <zookeeper.version>3.6.3</zookeeper.version>
+        <spring-security.version>5.6.3</spring-security.version>
     </properties>
 
     <dependencyManagement>
@@ -35,4 +36,11 @@
         </dependencies>
     </dependencyManagement>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+    </dependencies>
 </project>
