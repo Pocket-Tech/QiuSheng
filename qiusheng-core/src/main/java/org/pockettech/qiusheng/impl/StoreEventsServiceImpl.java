@@ -12,10 +12,7 @@ import org.pockettech.qiusheng.entity.data.Song;
 import org.pockettech.qiusheng.entity.data.User;
 import org.pockettech.qiusheng.entity.result.ChartResult;
 import org.pockettech.qiusheng.entity.result.ListResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -74,6 +71,7 @@ public class StoreEventsServiceImpl implements StoreActivityService {
         String[] cid_list = cids.split(",");
 
         for (String cid : cid_list){
+            //TODO:可以试着改改
             Chart chart = chartDao.findChartByCid(Integer.parseInt(cid));
             User user = userDao.findNameByUid(chart.getUid());
             Song song = songDao.findSongById(chart.getSid());
@@ -84,5 +82,17 @@ public class StoreEventsServiceImpl implements StoreActivityService {
         log.info("查询活动谱面成功！");
 
         return new ListResult<>(0,true,2,result);
+    }
+
+    @PostMapping("/admin/event/add")
+    @ResponseBody
+    public void addEvent(@RequestBody(required = false) Event event) {
+        eventDao.addEvent(event);
+    }
+
+    @PostMapping("/admin/event/update")
+    @ResponseBody
+    public void updateEvent(@RequestBody(required = false) Event event) {
+        eventDao.updateEvent(event);
     }
 }

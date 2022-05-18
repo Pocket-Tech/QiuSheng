@@ -44,12 +44,16 @@ create table if not exists chart
 );
 create table if not exists events
 (
-    eid int auto_increment,
-    sid int null,
-    constraint events_pk
-        primary key (eid),
-    constraint events_song_sid_fk
-        foreign key (sid) references song (sid)
+    eid      int auto_increment,
+    name     varchar(50)  not null,
+    sponsor  varchar(50)  not null,
+    start    date         not null,
+    end      date         not null,
+    cover    varchar(200) null,
+    active   int          not null,
+    cid_list varchar(400) not null,
+    constraint table_name_pk
+        primary key (eid)
 );
 create table if not exists admin
 (
