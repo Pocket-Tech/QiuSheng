@@ -30,7 +30,8 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                     .loginProcessingUrl("/admin/login")
-//                    .loginPage("/login") //TODO:实现自定义登录
-                    .permitAll();
+                    .permitAll()
+                .and()
+                .csrf().disable();//TODO:尝试在qiusheng-terminal中加入csrf防护
     }
 }

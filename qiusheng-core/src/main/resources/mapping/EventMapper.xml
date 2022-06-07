@@ -28,5 +28,9 @@
         start = #{start}, end = #{end}, cover = #{cover}, active = #{active}, cid_list = #{cid_list}
         where eid = #{eid}
     </update>
+
+    <delete id="deleteEvent" parameterType="java.lang.Integer">
+        delete from events where eid = #{eid}
+    </delete>
 </mapper>
 

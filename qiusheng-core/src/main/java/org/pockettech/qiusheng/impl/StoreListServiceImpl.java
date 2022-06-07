@@ -86,4 +86,21 @@ public class StoreListServiceImpl implements StoreListService {
         return new ListResult<>(1,false,0, result);
     }
 
+
+    @PostMapping("/admin/store/deleteSong")
+    @ResponseBody
+    public int deleteSong(@RequestParam int sid) {
+        //TODO:添加删除歌曲以下所有铺面文件的选项与逻辑
+
+
+        int deleteCode = songDao.deleteSong(sid);
+
+        if (deleteCode == 0) {
+            log.info("删除谱面(cid: " + sid + ")时出错，可能原因为数据库中并未存在该谱面");
+            return 1;
+        } else
+            log.info("成功删除谱面(cid: " + sid + ")");
+
+        return 0;
+    }
 }

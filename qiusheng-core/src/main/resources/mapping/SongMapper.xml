@@ -58,5 +58,9 @@
     <update id="updateImgMD5PathBySid" parameterType="org.pockettech.qiusheng.entity.data.Song">
         update song set img_md5 = #{img_md5}, img_file_path = #{img_file_path} where sid = #{sid}
     </update>
+
+    <delete id="deleteSong" parameterType="java.lang.Integer">
+        delete from song where sid = #{sid}
+    </delete>
 </mapper>
 

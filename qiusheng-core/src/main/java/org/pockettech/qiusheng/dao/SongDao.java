@@ -16,4 +16,5 @@ public interface SongDao {
     void updateSong(Song song);
     void updateLengthBySid(@Param("sid") int sid, @Param("length") int length);
     void updateSongMD5PathBySid(Song song);
+    int deleteSong(@Param("sid") int sid);
 }

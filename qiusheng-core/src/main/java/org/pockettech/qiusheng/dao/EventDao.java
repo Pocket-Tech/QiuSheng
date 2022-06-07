@@ -11,4 +11,5 @@ public interface EventDao {
     String findCidListByEid(@Param("eid") int eid);
     void addEvent(Event event);
     void updateEvent(Event event);
+    int deleteEvent(@Param("eid") int eid);
 }

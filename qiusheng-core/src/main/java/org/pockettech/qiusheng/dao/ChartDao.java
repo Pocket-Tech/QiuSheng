@@ -13,4 +13,5 @@ public interface ChartDao {
     Integer findSidByCid(@Param("cid") int cid);
     void uploadChartMsg(Chart chart);
     void updateChart(Chart chart);
+    int deleteChart(@Param("cid") int cid);
 }

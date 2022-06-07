@@ -95,4 +95,15 @@ public class StoreEventsServiceImpl implements StoreActivityService {
     public void updateEvent(@RequestBody(required = false) Event event) {
         eventDao.updateEvent(event);
     }
+
+    @PostMapping("/admin/event/delete")
+    @ResponseBody
+    public void deleteEvent(@RequestParam(required = false) int eid) {
+        int deleteCode = eventDao.deleteEvent(eid);
+
+        if (deleteCode == 0)
+            log.info("删除活动(eid: " + eid + ")时出错，可能原因为数据库中并未存在该事件");
+        else
+            log.info("成功删除活动(eid: " + eid + ")");
+    }
 }

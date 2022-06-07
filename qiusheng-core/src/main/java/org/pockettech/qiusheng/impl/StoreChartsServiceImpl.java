@@ -335,6 +335,21 @@ public class StoreChartsServiceImpl implements ChartTransferService {
         return new DownloadResult(0, items, chart.getSid(), chart.getCid());
     }
 
+    @PostMapping("/admin/store/deleteChart")
+    @ResponseBody
+    public int deleteChart(@RequestParam int cid) {
+        int deleteCode = chartDao.deleteChart(cid);
+        //TODO:添加删除铺面文件的选项与逻辑
+
+        if (deleteCode == 0) {
+            log.info("删除谱面(cid: " + cid + ")时出错，可能原因为数据库中并未存在该谱面");
+            return 1;
+        } else
+            log.info("成功删除谱面(cid: " + cid + ")");
+
+        return 0;
+    }
+
     //返回代码类
     @Data
     @AllArgsConstructor
