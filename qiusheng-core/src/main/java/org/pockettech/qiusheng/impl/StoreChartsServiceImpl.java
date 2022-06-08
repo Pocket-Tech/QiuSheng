@@ -24,7 +24,6 @@ import org.pockettech.qiusheng.entity.filter.ChartFilter;
 import org.pockettech.qiusheng.entity.tools.ChartFileHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.DigestUtils;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -156,20 +155,7 @@ public class StoreChartsServiceImpl implements ChartTransferService {
         log.info("已收到" + name);
 
         try {
-            String os = System.getProperty("os.name");
-            String filePath = "";
-
-            if (os.toLowerCase().startsWith("win")) {
-                File path = new File(ResourceUtils.getURL("classpath:").getPath());
-                filePath = path.getParentFile().getParentFile().getParent() + File.separator + "MalodyV" + File.separator;
-                // 项目作为jar包运行时路径会带上“file:\\”，在此找到并删除
-                int sub = filePath.indexOf("file:" + File.separator);
-                if (sub != -1){
-                    filePath = filePath.substring(sub + ("file:" + File.separator).length());
-                }
-            } else {
-                filePath = "MalodyV" + File.separator;
-            }
+            String filePath = ChartFileHandler.getLocalFilePath();
 
             filePath = filePath + "_song_" + sid + File.separator;
             log.info("----------上传路径为" + filePath + "----------");
@@ -196,7 +182,7 @@ public class StoreChartsServiceImpl implements ChartTransferService {
 
             log.info("文件" + name + "存入成功");
 
-            //TODO:此处存在可能的隐患：通常情况下客户端会优先传输铺面文件进行谱面信息在数据库登记，
+            //TIP:此处存在可能的隐患：通常情况下客户端会优先传输铺面文件进行谱面信息在数据库登记，
             // 此后对音频文件进行分析即可更新数据库中的信息，不知道会不会存在不寻常的情况如谱面文件上传失败。
             if (ChartFileHandler.getFileExtension(name).equals(".mc")) {
                 ChartFileHandler chartFileHandler = new ChartFileHandler("http://" + localhost + ":" + port + "/resource");
@@ -337,9 +323,13 @@ public class StoreChartsServiceImpl implements ChartTransferService {
 
     @PostMapping("/admin/store/deleteChart")
     @ResponseBody
-    public int deleteChart(@RequestParam int cid) {
+    public int deleteChart(@RequestParam int cid) throws FileNotFoundException {
+        //TODO:考虑添加删除铺面文件的选项
+        Chart chart = chartDao.findChartByCid(cid);
+        if (!ChartFileHandler.deleteFileFromChart(chart))
+            return 1;
+
         int deleteCode = chartDao.deleteChart(cid);
-        //TODO:添加删除铺面文件的选项与逻辑
 
         if (deleteCode == 0) {
             log.info("删除谱面(cid: " + cid + ")时出错，可能原因为数据库中并未存在该谱面");

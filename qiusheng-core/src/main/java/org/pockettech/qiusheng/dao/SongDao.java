@@ -1,6 +1,7 @@
 package org.pockettech.qiusheng.dao;
 
 import org.apache.ibatis.annotations.Param;
+import org.pockettech.qiusheng.entity.data.Chart;
 import org.pockettech.qiusheng.entity.data.Song;
 
 import java.util.List;

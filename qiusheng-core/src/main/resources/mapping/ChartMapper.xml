@@ -21,12 +21,14 @@
 
     <resultMap id="findChartsBySidMap" type="org.pockettech.qiusheng.entity.data.Chart">
         <id column="cid" property="cid" jdbcType="INTEGER"/>
+        <result column="sid" property="sid" jdbcType="INTEGER"/>
         <result column="uid" property="uid" jdbcType="INTEGER"/>
         <result column="version" property="version" jdbcType="VARCHAR"/>
         <result column="level" property="level" jdbcType="INTEGER"/>
         <result column="type" property="type" jdbcType="INTEGER"/>
         <result column="size" property="size" jdbcType="INTEGER"/>
         <result column="c_mode" property="c_mode" jdbcType="INTEGER"/>
+        <result column="c_file_path" property="c_file_path" jdbcType="VARCHAR"/>
         <collection property="user" ofType="org.pockettech.qiusheng.entity.data.User">
             <id column="uid" property="uid" jdbcType="INTEGER"/>
             <result column="user_name" property="user_name" jdbcType="VARCHAR"/>

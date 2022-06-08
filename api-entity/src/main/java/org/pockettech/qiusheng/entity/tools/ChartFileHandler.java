@@ -9,6 +9,7 @@ import org.jaudiotagger.audio.ogg.util.OggInfoReader;
 import org.pockettech.qiusheng.entity.data.Chart;
 import org.pockettech.qiusheng.entity.data.Song;
 import org.pockettech.qiusheng.entity.data.User;
+import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.math.BigInteger;
@@ -24,6 +25,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
+//该类为谱面文件处理的工具类，包含一系列对谱面文件处理的方法
 @NoArgsConstructor
 public class ChartFileHandler {
 
@@ -40,6 +42,31 @@ public class ChartFileHandler {
 
     public ChartFileHandler(String rootResourcePath) {
         this.rootResourcePath = rootResourcePath;
+    }
+
+    public static String getLocalFilePath() throws FileNotFoundException {
+        String os = System.getProperty("os.name");
+        String filePath = "";
+
+        if (os.toLowerCase().startsWith("win")) {
+            File path = new File(ResourceUtils.getURL("classpath:").getPath());
+            filePath = path.getParentFile().getParentFile().getParent() + File.separator + "MalodyV" + File.separator;
+            // 项目作为jar包运行时路径会带上“file:\\”，在此找到并删除
+            int sub = filePath.indexOf("file:" + File.separator);
+            if (sub != -1){
+                filePath = filePath.substring(sub + ("file:" + File.separator).length());
+            }
+        } else {
+            filePath = "MalodyV" + File.separator;
+        }
+        return filePath;
+    }
+
+    public static boolean deleteFileFromChart(Chart chart) throws FileNotFoundException {
+        String filePath = getLocalFilePath() + "_song_" + chart.getSid() + File.separator + chart.getC_file_path().substring(chart.getC_file_path().lastIndexOf("/") + 1);
+        File file = new File(filePath);
+
+        return file.delete();
     }
 
     //获取文件后缀
