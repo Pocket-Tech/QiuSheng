@@ -5,7 +5,7 @@ English | [简体中文](README.md)
 
 ### Introduction
 ------------------
-QiuSheng is a simple Malody V chart store server based on Spring boot + Mybatis and following the Malody Store API. By simply modifying the configuration file, players can build a chart server on their own server computer. At present, QiuSheng has realized some main functions of chart query, upload and download. In the future, related functions such as chart server events, store functions of Malody skins, and the management terminal for server owners will be updated. 
+QiuSheng is a simple Malody V chart store server based on Spring boot + Mybatis and following the Malody Store API. By simply modifying the configuration file, players can build a chart server on their own server computer. At present, QiuSheng has realized the main functions of chart query, upload, download and server activities. After version 1.1.0, some functions that provide administrator rights have been added. In the future, related functions such as skins and management terminal for server owners will be updated.
 
 At present, Qiusheng is following the Malody Store API version: 202112.
 
@@ -14,6 +14,8 @@ At present, Qiusheng is following the Malody Store API version: 202112.
 ### Set .yml configuration file 
 ------------------
 Because of the project is developed based on spring boot, the server owner should make some necessary configurations in the configuration file according to their own needs. If you need to compile from source code, you can add a yml configuration file to the resource folder in the qiusheng-core module. The content can refer to the following code:
+
+Before running the server, make sure you have created a Mysql database for the server and configured it accordingly in the configuration file.
 
 ```yml
 server:
@@ -37,6 +39,8 @@ spring:
       mode: always
 
   datasource:
+    hikari:
+      max-lifetime: 120000
     url: jdbc:mysql://:3306/ #Fill in the url of your database server
     username:  #username of your database server
     password:  #password of your database server

@@ -1,5 +1,3 @@
-create database if not exists qiusheng_core CHARACTER SET utf8 COLLATE utf8_general_ci;
-use qiusheng_core;
 create table if not exists song
 (
     sid int not null,
@@ -40,15 +38,15 @@ create table if not exists chart
     constraint chart_song_sid_fk
         foreign key (sid) references song (sid),
     constraint chart_user_uid_fk
-        foreign key (uid) references user (uid)
+        foreign key (uid) references `user` (uid)
 );
 create table if not exists events
 (
     eid      int auto_increment,
-    name     varchar(50)  not null,
+    `name`     varchar(50)  not null,
     sponsor  varchar(50)  not null,
-    start    date         not null,
-    end      date         not null,
+    `start`    date         not null,
+    `end`      date         not null,
     cover    varchar(200) null,
     active   int          not null,
     cid_list varchar(400) not null,

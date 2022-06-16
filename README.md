@@ -5,7 +5,7 @@
 
 ### 简介
 ------------------
-QiuSheng是一个简单的基于Spring boot + Mybatis所开发的遵循Malody Store API的Malody V谱面服务器。通过简单修改配置文件，玩家可以在自己的服务器上简单的搭建一个谱面服务器。目前QiuSheng已经实现了谱面的查询、上传、下载等主要功能。将来将更新对谱面服务器活动、皮肤等相关功能以及针对服主的管理终端。
+QiuSheng是一个简单的基于Spring boot + Mybatis所开发的遵循Malody Store API的Malody V谱面服务器。通过简单修改配置文件，玩家可以在自己的服务器上简单的搭建一个谱面服务器。目前QiuSheng已经实现了谱面的查询、上传、下载与服务器活动等主要功能，在1.1.0版本之后已添加了提供管理员权限的一些功能。将来将更新皮肤等相关功能以及针对服主的管理终端。
 
 目前QiuSheng支持到202112版本的Malody Store API。
 
@@ -14,6 +14,8 @@ QiuSheng是一个简单的基于Spring boot + Mybatis所开发的遵循Malody St
 ### 设定yml配置文件
 ------------------
 由于该项目基于spring boot开发，所以服主可以根据自己的需求在配置文件中进行一些必要的配置。如果需要通过源代码编译，您可以在qiusheng-core模块中的resource文件夹下添加yml配置文件。其中内容可以参考以下代码：
+
+在运行该服务器之前，请确保您为服务器创建了一个Mysql数据库，并在配置文件中进行相应的配置。
 
 ```yml
 server:
@@ -37,6 +39,8 @@ spring:
       mode: always
 
   datasource:
+    hikari:
+      max-lifetime: 120000
     url: jdbc:mysql://:3306/ #填写数据库地址
     username:  #数据库用户名
     password:  #数据库密码
