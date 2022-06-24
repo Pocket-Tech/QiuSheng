@@ -1,5 +1,6 @@
 package org.pockettech.qiusheng.config;
 
+import org.pockettech.qiusheng.handler.LoginFailureHandler;
 import org.pockettech.qiusheng.impl.admin.AdminDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +31,8 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                     .loginProcessingUrl("/admin/login")
+                    .defaultSuccessUrl("/admin/info")
+                    .failureHandler(new LoginFailureHandler())
                     .permitAll()
                 .and()
                 .csrf().disable();//TODO:尝试在qiusheng-terminal中加入csrf防护

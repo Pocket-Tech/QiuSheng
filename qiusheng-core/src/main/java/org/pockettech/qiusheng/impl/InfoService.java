@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,23 @@ public class InfoService {
 
     @Value("${qiusheng.greeting}")
     String greeting;
+
+    @GetMapping("/admin/info")
+    @ResponseBody
+    public Information returnAdminInfo() {
+        info.setWelcome("Welcome, admin");
+        return info;
+    }
+
+    @PostMapping("/admin/error")
+    @ResponseBody
+    public void loginError() {
+        throw new LoginException();
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST,reason = "Login Failure")
+    public static class LoginException extends RuntimeException {
+    }
 
     @GetMapping("/api/store/info")
     @ResponseBody
