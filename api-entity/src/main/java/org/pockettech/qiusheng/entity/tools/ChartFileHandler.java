@@ -25,6 +25,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
+import static sun.swing.MenuItemLayoutHelper.max;
+
 //该类为谱面文件处理的工具类，包含一系列对谱面文件处理的方法
 @NoArgsConstructor
 public class ChartFileHandler {
@@ -188,12 +190,15 @@ public class ChartFileHandler {
     //返回从元数据构造的谱面对象
     public Chart returnChart() {
         User user = new User(0, meta.get("creator").getAsString());
+        String version = meta.get("version").getAsString();
+        int num = max(version.indexOf("LV."), version.indexOf("Lv."), version.indexOf("lv."));
+        String level = version.substring(num + 3);
         Chart chart = new Chart(
                 meta.get("id").getAsInt(), //cid
                 jsonSong.get("id").getAsInt(),//sid
                 0,//uid
                 meta.get("version").getAsString(),//version
-                6,//c_level
+                level.matches("[0-9]+") ? Integer.parseInt(level) : 0,//c_level
                 0,//type
                 file_size,//size
                 meta.get("mode").getAsInt(),//mode

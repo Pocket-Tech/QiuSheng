@@ -1,38 +1,38 @@
 create table if not exists song
 (
     sid int not null,
-    length int null,
-    bpm int null,
-    title varchar(50) null,
-    artist varchar(50) null,
-    s_mode int null,
-    time int null,
-    s_md5 varchar(50) null,
-    s_file_path varchar(200) null,
-    img_md5 varchar(50) null,
-    img_file_path varchar(100) null,
+    length int not null,
+    bpm int not null,
+    title varchar(50) not null,
+    artist varchar(50) not null,
+    s_mode int not null,
+    time int not null,
+    s_md5 varchar(50) not null,
+    s_file_path varchar(200) not null,
+    img_md5 varchar(50) not null,
+    img_file_path varchar(100) not null,
     constraint song_pk
         primary key (sid)
 );
 create table if not exists user
 (
     uid int auto_increment,
-    user_name varchar(50) null,
+    user_name varchar(50) not null,
     constraint user_pk
         primary key (uid)
 );
 create table if not exists chart
 (
     cid int not null,
-    sid int null,
+    sid int not null,
     uid int null,
-    version varchar(50) null,
-    level int null,
-    type int null,
-    size long null,
-    c_mode int null,
-    c_md5 varchar(50) null,
-    c_file_path varchar(200) null,
+    version varchar(50) not null,
+    level int not null,
+    type int not null,
+    size long not null,
+    c_mode int not null,
+    c_md5 varchar(50) not null,
+    c_file_path varchar(200) not null,
     constraint chart_pk
         primary key (cid),
     constraint chart_song_sid_fk

@@ -46,8 +46,8 @@ public class InfoService {
     @NoArgsConstructor
     public static class Information {
         private int code = 0;
-        private int api = 202112;
-        private int min = 202112;
+        private int api = 202206;
+        private int min = 202206;
         private String welcome = "Welcome to QiuSheng Server";
     }
 }

@@ -22,4 +22,8 @@ public class Chart implements Serializable {
     private String c_file_path;
     private Song song;
     private User user;
+
+    public Chart(String c_md5) {
+        this.c_md5 = c_md5;
+    }
 }

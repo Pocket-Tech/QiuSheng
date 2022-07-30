@@ -11,11 +11,7 @@ public interface SongDao {
     List<Song> returnSongList();
     List<Song> returnSomeSongList(@Param("first") int first,@Param("number") int number);
     List<Song> findSongByCMode(@Param("mode") int mode);
-    List<Song> findSomeSongByCMode(@Param("mode") int mode, @Param("first") int first, @Param("number") int number);
     Song findSongById(@Param("sid") int sid);
-    void uploadSongMsg(Song song);
     void updateSong(Song song);
-    void updateLengthBySid(@Param("sid") int sid, @Param("length") int length);
-    void updateSongMD5PathBySid(Song song);
     int deleteSong(@Param("sid") int sid);
 }

@@ -58,6 +58,7 @@ coverage.txt
 MalodyV
 
 application.yaml
+application.yml
 
 test/jobs
 version-matrix.txt

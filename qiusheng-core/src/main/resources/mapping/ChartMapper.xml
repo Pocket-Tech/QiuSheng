@@ -39,30 +39,19 @@
         </collection>
     </resultMap>
 
-    <select id="findChartByCid" resultType="org.pockettech.qiusheng.entity.data.Chart">
-        select * from chart where cid = #{cid}
-    </select>
-
     <select id="findSidByCid" resultType="java.lang.Integer">
         select sid from chart where cid = #{cid}
     </select>
 
-    <insert id="uploadChartMsg" parameterType="org.pockettech.qiusheng.entity.data.Chart">
-        <selectKey keyProperty="cid" order="AFTER" resultType="java.lang.Integer">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
-        insert into chart
-        (cid, sid, uid, version, level, type, size, c_mode, c_md5, c_file_path)
+    <insert id="updateChart" parameterType="org.pockettech.qiusheng.entity.data.Chart">
+        insert into chart (cid, sid, uid, version, level, type, size, c_mode, c_md5, c_file_path)
         values
         (#{cid}, #{sid}, #{uid}, #{version}, #{level}, #{type}, #{size}, #{c_mode}, #{c_md5}, #{c_file_path})
+        ON DUPLICATE KEY UPDATE
+        uid = values(uid), version = values(version), level = values(level), type = values(type),
+        size = values(size), c_mode = values(c_mode), c_md5 = values(c_md5),
+        c_file_path = values(c_file_path)
     </insert>
-
-    <update id="updateChart" parameterType="org.pockettech.qiusheng.entity.data.Chart">
-        update chart set
-        version = #{version},level = #{level},
-        type = #{type},size = #{size},c_mode = #{c_mode},c_md5 = ifnull(#{c_md5},c_md5),c_file_path = #{c_file_path}
-        where cid = #{cid}
-    </update>
 
     <delete id="deleteChart" parameterType="java.lang.Integer">
         delete from chart where cid = #{cid}

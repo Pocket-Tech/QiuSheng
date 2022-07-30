@@ -53,8 +53,10 @@ public class StoreChartsServiceImpl implements ChartTransferService {
     ChartFilterBuilder builder = new ChartFilterBuilder();
 
     public static HashMap<String, Integer> hashMap = new HashMap<>();
-    public static HashMap<Integer, String> hashSongs = new HashMap<>();
-    public static HashMap<Integer, String> hashImgs = new HashMap<>();
+//    public static HashMap<Integer, String> hashSongs = new HashMap<>();
+//    public static HashMap<Integer, String> hashImgs = new HashMap<>();
+
+    public static HashMap<Integer, Chart> hashChart = new HashMap<>();
     //谱面列表
     @GetMapping("/api/store/charts")
     @ResponseBody
@@ -132,8 +134,8 @@ public class StoreChartsServiceImpl implements ChartTransferService {
             msgs.add(new MetaMsg(sid, cid, names[i], hashCodes[i]));
             hashMap.put(hashCodes[i],0);
         }
-        hashImgs.put(sid,hashCodes[1]);
-        hashSongs.put(sid,hashCodes[2]);
+        hashChart.put(sid,new Chart(hashCodes[0]));
+        hashChart.get(sid).setSong(new Song(hashCodes[2], hashCodes[1]));
 
         log.info("第一阶段完成");
         ChartSign sign = new ChartSign(0, -1, "No Error", "http://" + localhost + ":" + port + "/api/store/uploading", msgs);
@@ -185,6 +187,13 @@ public class StoreChartsServiceImpl implements ChartTransferService {
             //TIP:此处存在可能的隐患：通常情况下客户端会优先传输铺面文件进行谱面信息在数据库登记，
             // 此后对音频文件进行分析即可更新数据库中的信息，不知道会不会存在不寻常的情况如谱面文件上传失败。
             if (ChartFileHandler.getFileExtension(name).equals(".mc")) {
+
+                //判断此阶段的MD5与第一阶段MD5是否一致
+                if (!hashChart.get(sid).getC_md5().equals(hash)) {
+                    log.info("谱面md5不一致");
+                    return;
+                }
+
                 ChartFileHandler chartFileHandler = new ChartFileHandler("http://" + localhost + ":" + port + "/resource");
                 chartFileHandler.setZipChartFile(filePath);
                 log.info("----------文件路径为：" + filePath + "----------");
@@ -205,57 +214,30 @@ public class StoreChartsServiceImpl implements ChartTransferService {
                 Song song = chartFileHandler.returnSong();
                 User user = chart.getUser();
 
-                chart.setC_md5(hash);
-                chart.setSid(sid);
-                chart.setCid(cid);
+                song.setS_md5(hashChart.get(sid).getSong().getS_md5());
+                chart.setC_md5(hashChart.get(sid).getC_md5());
+                song.setImg_md5(hashChart.get(sid).getSong().getImg_md5());
 
-                song.setSid(sid);
-                song.setS_md5(hashSongs.get(sid));
-                song.setImg_md5(hashImgs.get(sid));
+                chart.setSong(song);
 
-                hashImgs.remove(sid);
-                hashSongs.remove(sid);
+                hashChart.put(sid, chart);
 
-                Song s = songDao.findSongById(sid);
-                Chart c = chartDao.findChartByCid(cid);
-                User u = userDao.findUserByName(user.getUser_name());
-
-                log.info("谱面及歌曲信息正在写入数据库...");
-
-                if (s == null && c == null){
-                    song.setS_mode(1 << chart.getC_mode());
-                    songDao.uploadSongMsg(song);
-
-                    if (u == null)
-                        userDao.uploadUser(user);
-
-                    chart.setUid(user.getUid());
-                    chartDao.uploadChartMsg(chart);
-                    log.info("谱面及歌曲信息初始化成功");
-                } else if (c == null){
-                    int newMode = s.getS_mode();
-                    newMode = newMode | (1 << chart.getC_mode());
-                    song.setS_mode(newMode);
-
-                    if (u == null) {
-                        userDao.uploadUser(user);
-                        chart.setUid(user.getUid());
-                    } else {
-                        chart.setUid(u.getUid());
-                    }
-
-                    songDao.updateSong(song);
-                    chartDao.uploadChartMsg(chart);
-
-                    log.info("谱面及歌曲mode信息更新成功");
-                }
             } else if (ChartFileHandler.getFileExtension(name).equals(".ogg")) {
+
+                if (!hashChart.get(sid).getSong().getS_md5().equals(hash)) {
+                    log.info("歌曲md5不一致");
+                    return;
+                }
+
                 int length = (int) ChartFileHandler.getOggLength(filePath);
                 log.info("音频文件" + name + "解析成功，正在写入数据库...");
 
-                songDao.updateLengthBySid(sid, length);
-
-                log.info("数据写入成功,第二阶段阶段完成");
+                hashChart.get(sid).getSong().setLength(length);
+            } else {
+                if (!hashChart.get(sid).getSong().getImg_md5().equals(hash)) {
+                    log.info("图片md5不一致");
+                    return;
+                }
             }
             //到此表示文件写入成功，hashmap值改变
             hashMap.put(hash,1);
@@ -290,8 +272,23 @@ public class StoreChartsServiceImpl implements ChartTransferService {
             hashMap.remove(str);
         }
 
-        if (result == 0)
-            log.info("确认无误，第三阶段完成");
+        if (result == 0) {
+            log.info("确认无误，第三阶段完成，正在存入本地数据库...");
+            Chart chart = hashChart.get(sid);
+            Song song = chart.getSong();
+            User user = userDao.findUserByName(chart.getUser().getUser_name());
+            int uid = user == null ? 0 : user.getUid();
+            if (uid == 0){
+                userDao.uploadUser(chart.getUser());
+                uid = chart.getUser().getUid();
+            } else {
+                userDao.updateUserById(uid, chart.getUser().getUser_name());
+            }
+            chart.setUid(uid);
+            songDao.updateSong(chart.getSong());
+            chartDao.updateChart(chart);
+            hashChart.remove(sid);
+        }
         else
             log.info("好像出问题了...");
         return new ReturnCode(result);
