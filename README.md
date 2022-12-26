@@ -31,6 +31,28 @@ spring:
       max-file-size: 1000MB
       max-request-size: 1000MB
     #利用multipart file进行文件传输，可以在这里配置相关属性
+    # redis 配置
+  redis:
+    # 地址
+    host: localhost
+    # 端口，默认为6379
+    port: 6379
+    # 数据库索引
+    database: 6
+    # 密码
+    password: #没有则不填
+    # 连接超时时间
+    timeout: 10s
+    lettuce:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池的最大数据库连接数
+        max-active: 8
+        # #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
 
   sql:
     init:
@@ -59,7 +81,7 @@ mybatis:
 > 1.更改端口为未被占用的端口（可选）  
 2.填写本机ip地址或域名（必须）  
 3.更改文件上传大小限制（可选，但不建议）  
-4.填写数据源信息（必须）
+4.填写数据源信息（Mysql&Redis）（必须）
 
 配置完成之后就可以启动服务了。
 
