@@ -12,6 +12,9 @@ import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
 
+/**
+ * security默认认证，由于功能拓展已弃用
+ */
 @Slf4j
 @Controller
 public class AdminDetailService implements UserDetailsService {
@@ -28,7 +31,7 @@ public class AdminDetailService implements UserDetailsService {
 
         String encodePassword = passwordEncoder.encode(admin.getPassword());
         log.info("Password(encrypted):" + encodePassword);
-        admin.setPassword(encodePassword);
+//        admin.setPassword(encodePassword);
         return admin;
     }
 }

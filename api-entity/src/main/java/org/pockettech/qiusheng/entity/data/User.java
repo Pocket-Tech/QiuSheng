@@ -12,4 +12,11 @@ import java.io.Serializable;
 public class User implements Serializable {
     private Integer uid;
     private String user_name;
+    private String password;
+    private String salt;
+
+    public User(Integer uid, String user_name) {
+        this.uid = uid;
+        this.user_name = user_name;
+    }
 }
