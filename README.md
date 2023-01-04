@@ -1,4 +1,7 @@
 # QiuSheng
+
+[![CodeFactor](https://www.codefactor.io/repository/github/pocket-tech/qiusheng/badge/master)](https://www.codefactor.io/repository/github/pocket-tech/qiusheng/overview/master)
+
 开源Malody V谱面服务器
 
 [English](README_ENG.md) | 简体中文
