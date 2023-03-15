@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.pockettech.qiusheng.mapper.ChartMapper">
+
+    <resultMap id="ChartsResult" type="org.pockettech.qiusheng.entity.DTO.response.ChartResult">
+        <id column="c_cid" property="cid"/>
+        <result column="s_sid" property="sid"/>
+        <result column="u_uid" property="uid"/>
+        <result column="u_creator" property="creator"/>
+        <result column="c_version" property="version"/>
+        <result column="s_title" property="title"/>
+        <result column="s_artist" property="artist"/>
+        <result column="c_level" property="level"/>
+        <result column="s_length" property="length"/>
+        <result column="c_type" property="type"/>
+        <result column="s_cover" property="cover"/>
+        <result column="c_size" property="size"/>
+        <result column="c_mode" property="mode"/>
+        <result column="c_file_path" property="file_path"/>
+        <result column="s_time" property="time"/>
+    </resultMap>
+
+    <select id="selectEventChartsByCids" resultMap="ChartsResult">
+        select c.cid as c_cid, c.version as c_version, c.level as c_level, c.type as c_type, c.size as c_size, c.c_mode as c_mode, c.file_path as c_file_path,
+               s.sid as s_sid, s.title as s_title, s.artist as s_artist, s.length as s_length, s.img_file_path as s_cover, s.time as s_time,
+               u.user_name as u_creator
+        from chart c
+        left join song s on c.sid = s.sid
+        left join user u on u.uid = c.uid
+        where c.cid in  <foreach collection="cids" item="item" index="index" separator="," open="(" close=")">
+                            #{item}
+                        </foreach>
+    </select>
+
+    <select id="selectChart" parameterType="org.pockettech.qiusheng.entity.Chart" resultMap="ChartsResult">
+        select c.cid as c_cid, c.version as c_version, c.level as c_level, c.type as c_type, c.size as c_size, c.c_mode as c_mode, c.c_file_path as c_file_path,
+               s.sid as s_sid, s.title as s_title, s.artist as s_artist, s.length as s_length, s.img_file_path as s_cover, s.time as s_time,
+               u.user_name as u_creator
+        from chart c
+                 left join song s on c.sid = s.sid
+                 left join user u on u.uid = c.uid
+        <where>
+            <if test="mode != null"> and mode = #{mode}</if>
+            <if test="promote != null"> and promote = #{promote}</if>
+            <if test="beta != null"> and beta = #{beta}</if>
+            and c.sid = #{sid}
+        </where>
+    </select>
+
+    <select id="selectChartById" resultType="org.pockettech.qiusheng.entity.Chart">
+        select * from chart where cid = #{cid}
+    </select>
+
+    <insert id="updateChart" parameterType="org.pockettech.qiusheng.entity.Chart">
+        insert into chart (cid, sid, uid, version, level, type, size, c_mode, c_md5, c_file_path)
+        values
+            (#{cid}, #{sid}, #{uid}, #{version}, #{level}, #{type}, #{size}, #{c_mode}, #{c_md5}, #{c_file_path})
+        ON DUPLICATE KEY UPDATE
+             uid = values(uid), version = values(version), level = values(level), type = values(type),
+             size = values(size), c_mode = values(c_mode), c_md5 = values(c_md5),
+             c_file_path = values(c_file_path)
+    </insert>
+
+</mapper>
+

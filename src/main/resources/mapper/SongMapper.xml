@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.pockettech.qiusheng.mapper.SongMapper">
+
+    <resultMap id="SongsResult" type="org.pockettech.qiusheng.entity.DTO.response.SongResult">
+        <id column="s_sid" property="sid"/>
+        <result column="s_cover" property="cover"/>
+        <result column="s_length" property="length"/>
+        <result column="s_bpm" property="bpm"/>
+        <result column="s_title" property="title"/>
+        <result column="s_artist" property="artist"/>
+        <result column="s_mode" property="mode"/>
+        <result column="s_time" property="time"/>
+    </resultMap>
+
+    <select id="selectSongResultList" resultMap="SongsResult">
+        select s.sid as sid, s.img_file_path as s_cover, s.length as s_length, s.bpm as s_bpm, s.title as s_title, s.artist as s_artist, s.s_mode as s_mode, s.time as s_time
+        from song s
+        left join chart c on c.sid = s.sid
+        <where>
+            <if test="sid != null"> and s.sid = #{sid}</if>
+            <if test="cid != null"> and c.cid = #{cid}</if>
+        </where>
+    </select>
+
+    <select id="selectSongList" resultMap="SongsResult">
+        select * from song s
+        left join chart c on c.sid = s.sid
+        <where>
+            <if test="mode != null"> and s.s_mode = (s.s_mode | (#{mode} >> 1)</if>
+            <if test="lvge != null and lvle != null"> and c.level between lvge and lvle</if>
+            <if test="promote != null"> and c.promote = #{promote}</if>
+        </where>
+    </select>
+
+    <select id="selectSongById" resultType="org.pockettech.qiusheng.entity.Song">
+        select * from song where sid = #{sid}
+    </select>
+
+    <insert id="updateSong" parameterType="org.pockettech.qiusheng.entity.Song">
+        insert into song (sid, length, bpm, title, artist, s_mode, time, s_md5, s_file_path, img_md5, img_file_path)
+        values
+            (#{sid}, #{length}, #{bpm}, #{title}, #{artist}, #{s_mode}, #{time}, #{s_md5}, #{s_file_path}, #{img_md5}, #{img_file_path})
+        ON DUPLICATE KEY UPDATE
+             length = values(length), bpm = values(bpm), title = values(title), artist = values(artist),
+             s_mode = values(s_mode), time = values(time), s_md5 = values(s_md5), s_file_path = values(s_file_path),
+             img_md5 = values(img_md5), img_file_path = values(img_file_path)
+    </insert>
+
+</mapper>
