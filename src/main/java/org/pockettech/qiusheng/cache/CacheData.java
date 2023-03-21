@@ -10,6 +10,13 @@ import java.util.HashMap;
 public class CacheData {
 
     /**
+     * 拥有过期时间的缓存属性名
+     */
+    public static final String[] TIME_FIELD = {
+            "tokenCache",
+    };
+
+    /**
      * 签名缓存
      */
     public static HashMap<Integer, String> signMap = new HashMap<>();
@@ -23,4 +30,9 @@ public class CacheData {
      * 谱面信息缓存
      */
     public static HashMap<Integer, Chart> hashChart = new HashMap<>();
+
+    /**
+     * 令牌缓存
+     */
+    public static HashMap<String, Object> tokenCache = new HashMap<>();
 }

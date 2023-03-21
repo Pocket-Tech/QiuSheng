@@ -88,7 +88,8 @@ public class StoreChartsController {
 
         log.info("已收到上传" + name + "文件请求...");
 
-        // TODO: 检查cid, sid是否已存在
+        // 检查cid, sid是否已存在
+
 
         List<JSONObject> objects = chartService.getSign(sid, cid, name, hash);
 

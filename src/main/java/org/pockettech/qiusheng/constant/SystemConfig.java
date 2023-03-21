@@ -23,6 +23,9 @@ public class SystemConfig {
     // jwt加密密钥
     public static String JWT_KEY;
 
+    // 登录失效时间
+    public static Integer LOGIN_TIME;
+
     // 服务器域名或ip
     public static String HOST;
 
@@ -52,6 +55,11 @@ public class SystemConfig {
     @Value("${info.jwt.key}")
     public void setJwtKey(String jwtKey) {
         SystemConfig.JWT_KEY = jwtKey;
+    }
+
+    @Value("${info.loginState.time}")
+    public void setLoginTime(Integer loginTime) {
+        SystemConfig.LOGIN_TIME = loginTime;
     }
 
     @Value("${info.host}")

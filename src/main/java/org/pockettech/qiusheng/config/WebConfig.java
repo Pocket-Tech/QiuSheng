@@ -13,6 +13,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
         registry.addResourceHandler("/resource/**")
-                .addResourceLocations("file:" + SystemConfig.ROOT_RESOURCE_PATH);//"file:" + file_path
+                .addResourceLocations("file:" + SystemConfig.ROOT_RESOURCE_PATH);
     }
 }

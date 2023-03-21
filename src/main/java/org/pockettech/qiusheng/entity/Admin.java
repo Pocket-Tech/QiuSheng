@@ -42,6 +42,11 @@ public class Admin implements UserDetails {
     @JSONField(serialize = false)
     private List<GrantedAuthority> authorities;
 
+    public Admin(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public Admin(Integer id, String username, String password, String role) {
         this.id = id;
         this.username = username;
@@ -52,6 +57,18 @@ public class Admin implements UserDetails {
         } else {
             this.permissions = Arrays.asList(role.split(","));
         }
+    }
+
+    public Admin(Integer id, String username, String role, boolean locked) {
+        this.id = id;
+        this.username = username;
+        this.role = role;
+        if (role == null || "".equals(role)) {
+            this.permissions = new ArrayList<>();
+        } else {
+            this.permissions = Arrays.asList(role.split(","));
+        }
+        this.locked = locked;
     }
 
     @Override
@@ -77,6 +94,10 @@ public class Admin implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public boolean getIsLocked() {
+        return locked;
     }
 
     @Override

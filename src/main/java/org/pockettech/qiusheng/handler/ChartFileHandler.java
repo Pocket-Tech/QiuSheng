@@ -178,7 +178,7 @@ public class ChartFileHandler {
         }
 
 
-        meta = JsonParser.parseString(content).getAsJsonObject().get("meta").getAsJsonObject();;
+        meta = JsonParser.parseString(content).getAsJsonObject().get("meta").getAsJsonObject();
         jsonSong = (JsonObject) meta.get("song");
     }
 

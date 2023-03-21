@@ -57,6 +57,31 @@ public class ResultCode {
     public static final int FILE_MISSING = 10004;
 
     /**
+     * 登录失败
+     */
+    public static final int LOGIN_FAILED = 20000;
+
+    /**
+     * 用户名或密码错误
+     */
+    public static final int PASSWORD_ERROR = 20001;
+
+    /**
+     * Token解析失败，Token非法
+     */
+    public static final int ILLEGAL_TOKEN = 20002;
+
+    /**
+     * 登录过期
+     */
+    public static final int LOGIN_EXPIRED = 20003;
+
+    /**
+     * 账户被锁定
+     */
+    public static final int ACCOUNT_LOCKED = 20004;
+
+    /**
      * 未知错误
      */
     public static final int UnknownError = 10001;

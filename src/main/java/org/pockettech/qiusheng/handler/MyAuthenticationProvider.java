@@ -1,5 +1,6 @@
 package org.pockettech.qiusheng.handler;
 
+import org.pockettech.qiusheng.constant.ResultCode;
 import org.pockettech.qiusheng.entity.Admin;
 import org.pockettech.qiusheng.exception.BusinessException;
 import org.pockettech.qiusheng.mapper.AdminMapper;
@@ -30,18 +31,18 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
         String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
 
-        //TODO:查找数据库比较密码
+        // 查找数据库比较密码
         Admin admin = adminMapper.getAdminByUsername(username);
 
         if (ObjectUtils.isEmpty(admin)) {
-            throw new BusinessException("Username or password error");
+            throw new BusinessException(ResultCode.PASSWORD_ERROR);
         }
 
         UserDetails userDetails = new Admin(admin.getId(), username, admin.getPassword(), admin.getRole());
 
         // 判断用户密码是否一致
         if (admin.getPassword() == null || !admin.getPassword().equals(DigestUtils.md5DigestAsHex(password.getBytes()))) {
-            throw new BusinessException("Username or password error");
+            throw new BusinessException(ResultCode.PASSWORD_ERROR);
         }
 
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();

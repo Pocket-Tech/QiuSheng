@@ -29,7 +29,6 @@ public class Convert {
         return value.toString();
     }
 
-
     /**
      * 转换为boolean<br>
      * 如果给定的值为空，或者转换失败，返回默认值<code>null</code><br>

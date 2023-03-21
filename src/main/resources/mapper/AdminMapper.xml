@@ -4,7 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.pockettech.qiusheng.mapper.AdminMapper">
 
-    <select id="getAdminByUsername" parameterType="string" resultType="org.pockettech.qiusheng.entity.Admin">
+    <select id="getAdminById" parameterType="java.lang.Integer" resultType="org.pockettech.qiusheng.entity.Admin">
+        select * from `admin` where id = #{userId}
+    </select>
+
+    <select id="getAdminByUsername" parameterType="java.lang.String" resultType="org.pockettech.qiusheng.entity.Admin">
         select * from `admin` where `username` = #{username}
     </select>
 

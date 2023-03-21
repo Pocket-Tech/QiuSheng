@@ -24,7 +24,6 @@ import javax.annotation.Resource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
@@ -40,7 +39,9 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/**",
             "/resource/**",
             "/admin/login",
-            "/error"
+            "/error",
+            "/admin/error",
+            "/throwError",
     };
 
     @Bean
@@ -57,7 +58,7 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()//TODO:尝试在qiusheng-terminal中加入csrf防护
+                .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()

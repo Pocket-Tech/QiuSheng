@@ -9,34 +9,49 @@ public enum ResultMessageEnum {
     SUCCESS(ResultCode.SUCCESS,"Success"),
 
     // 请求参数错误
-    BAD_REQUEST(ResultCode.BAD_REQUEST,"Parameter error"),
+    BAD_REQUEST(ResultCode.BAD_REQUEST,"Parameter error!"),
 
     // 未授权
-    UNAUTHORIZED(ResultCode.UNAUTHORIZED,"Unauthorized"),
+    UNAUTHORIZED(ResultCode.UNAUTHORIZED,"Unauthorized!"),
 
     // 权限不足
-    FORBIDDEN(ResultCode.FORBIDDEN,"Access not allowed"),
+    FORBIDDEN(ResultCode.FORBIDDEN,"Access not allowed!"),
 
     // 资源未找到或无法访问
-    NOT_FOUND(ResultCode.NOT_FOUND,"Not found"),
+    NOT_FOUND(ResultCode.NOT_FOUND,"Not found resource!"),
 
     // 请求方式错误
-    BAD_METHOD(ResultCode.BAD_METHOD,"Http method not allowed"),
+    BAD_METHOD(ResultCode.BAD_METHOD,"Http method not allowed!"),
 
     // 业务异常
-    ERROR(ResultCode.ERROR,"System error"),
+    ERROR(ResultCode.ERROR,"System error!"),
 
     // 文件处理失败
-    FILE_PROCESSING_FAILED(ResultCode.FILE_PROCESSING_FAILED, "File processing failed"),
+    FILE_PROCESSING_FAILED(ResultCode.FILE_PROCESSING_FAILED, "File processing failed!"),
 
     // 签名校验失败
-    SIGN_VERIFY_FAILED(ResultCode.SIGN_VERIFY_FAILED, "Signature verification failed"),
+    SIGN_VERIFY_FAILED(ResultCode.SIGN_VERIFY_FAILED, "Signature verification failed!"),
 
     // 文件丢失
-    FILE_MISSING(ResultCode.FILE_MISSING, "file missing"),
+    FILE_MISSING(ResultCode.FILE_MISSING, "File missing!"),
+
+    // 登录失败
+    LOGIN_FAILED(ResultCode.LOGIN_FAILED, "Login failed!"),
+
+    // 用户名或密码错误
+    PASSWORD_ERROR(ResultCode.PASSWORD_ERROR, "Username or password error!"),
+
+    // 用户名或密码错误
+    ILLEGAL_TOKEN(ResultCode.ILLEGAL_TOKEN, "Illegal Token!"),
+
+    // 用户名或密码错误
+    LOGIN_EXPIRED(ResultCode.LOGIN_EXPIRED, "Login Expired!"),
+
+    // 用户名或密码错误
+    ACCOUNT_LOCKED(ResultCode.ACCOUNT_LOCKED, "Account Locked!"),
 
     // 未知错误
-    UnknownError(ResultCode.UnknownError, "Unknown error");
+    UnknownError(ResultCode.UnknownError, "Unknown error!");
 
 
     private final Integer code;
@@ -45,6 +60,10 @@ public enum ResultMessageEnum {
     ResultMessageEnum(Integer code, String message){
         this.code = code;
         this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public static String getMessage(Integer code) {
@@ -62,10 +81,6 @@ public enum ResultMessageEnum {
 
     public Integer getCode() {
         return code;
-    }
-
-    public String getMessage() {
-        return message;
     }
 
 }
